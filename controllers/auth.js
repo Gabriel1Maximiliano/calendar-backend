@@ -6,14 +6,7 @@ const { validationResult } = require('express-validator');
 
     const {name,email,password} = req.body;
 
-    const  errors =validationResult( req );
-
-    if( !errors.isEmpty() ){
-        return res.status(400).json({
-            ok:false,
-            errors: errors.mapped()
-        })
-    }
+   
 
     const obj = {
         name,email,password
@@ -29,14 +22,7 @@ const loginUser = (req,res=express.response) => {
 
     const {email,password} = req.body;
 
-    const  errors =validationResult( req );
-
-    if( !errors.isEmpty() ){
-        return res.status(400).json({
-            ok:false,
-            errors: errors.mapped()
-        })
-    }
+  
 
     const obj = {
         email,
