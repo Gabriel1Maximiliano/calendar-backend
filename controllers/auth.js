@@ -1,10 +1,10 @@
 const express = require('express');// It helps whith autocomplete in vs
-
+const bcrypt = require('bcryptjs');
 const Users = require('../models/Users');
 
 const registerUser = async (req, res = express.response) => {
 
-    const { email } = req.body;
+    const { email,password } = req.body;
     try {
 
         let user = await Users.findOne({ email });
@@ -18,6 +18,9 @@ const registerUser = async (req, res = express.response) => {
             })
         }
         user = new Users(req.body);
+// Encrypting password
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync( password,salt );
 
         await user.save()
 
