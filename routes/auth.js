@@ -10,6 +10,7 @@ const router = express.Router();
 
 const  { registerUser, loginUser,renewTokenUser } = require('../controllers/auth');
 const { fieldsValidator } = require('../middlewares/fieldsValidators');
+const  jwtValidation  = require('../middlewares/jwtValidation');
 
 router.post('/register',
 [
@@ -29,7 +30,7 @@ router.post('/login',
     fieldsValidator
 ],loginUser);
 
-router.get('/renewToken',renewTokenUser);
+router.get('/renewToken',jwtValidation,renewTokenUser);
 
 // qafPWt5XCy01Da63
 module.exports = router;
