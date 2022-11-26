@@ -4,7 +4,9 @@ require('dotenv').config();
 
 const app = express();
 
+//reading and parsing the body
 
+app.use( express.json() );
 //Public directory
 
 app.use( express.static('public') );
