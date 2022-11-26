@@ -1,43 +1,60 @@
 const express = require('express');// It helps whith autocomplete in vs
 
-const { validationResult } = require('express-validator');
+const Users = require('../models/Users');
 
- const registerUser = (req,res=express.response) => {
+const registerUser = async (req, res = express.response) => {
 
-    const {name,email,password} = req.body;
+    const { email } = req.body;
+    try {
 
-   
+        let user = await Users.findOne({ email });
 
-    const obj = {
-        name,email,password
+
+        if (user) {
+            return res.status(500).json({
+                status: false,
+                msg: 'User already exists ',
+
+            })
+        }
+        user = new Users(req.body);
+
+        await user.save()
+
+        return res.status(201).json({
+            status: true,
+            msg: 'User created successfully',
+            id: user.id,
+            name:user.name
+
+        })
+
+    } catch (error) {
+        console.log(error);
+
     }
 
-   return res.status(201).json({
-        status:'ok',
-        msg:'Soy un registro de usuario',
-        resp:obj
-    })
 }
-const loginUser = (req,res=express.response) => {
+const loginUser = (req, res = express.response) => {
 
-    const {email,password} = req.body;
+    const { email, password } = req.body;
 
-  
+
 
     const obj = {
         email,
         password
     }
-   return res.status(200).json({
-        status:'ok',
-        msg:'Soy un login de usuario',
-        resp:obj
+    return res.status(200).json({
+        status: true,
+        msg: 'Soy un login de usuario',
+        resp: obj
     })
 }
-const renewTokenUser = (req,res=express.response) => {
-   return res.status(200).json({
-        status:'ok',
-        msg:'Soy un renewToken de usuario'
+const renewTokenUser = (req, res = express.response) => {
+    return res.status(200).json({
+        status: true,
+        msg: 'Soy un renewToken de usuario'
     })
 }
 module.exports = {
