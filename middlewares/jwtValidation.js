@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
  // x-token headers
 
  const token = req.header('x-token');
- console.log(token)
+
 if( !token ){
  res.status(401).json({
     status:false,
